@@ -33,16 +33,22 @@ export function ConnectWallet() {
   }
 
   return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="rounded-lg bg-gradient-to-r from-cyan-500/30 to-fuchsia-600/40 px-4 py-2 text-sm font-semibold text-white shadow-[0_0_20px_rgba(0,245,255,0.35)] ring-1 ring-cyan-400/50"
-      >
-        Connect wallet
-      </button>
+    <div className="relative w-full min-w-0 overflow-visible sm:w-auto">
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="rounded-lg bg-gradient-to-r from-cyan-500/30 to-fuchsia-600/40 px-4 py-2 text-sm font-semibold text-white shadow-[0_0_20px_rgba(0,245,255,0.35)] ring-1 ring-cyan-400/50"
+        >
+          Connect wallet
+        </button>
+      </div>
       {open && (
-        <div className="absolute right-0 z-50 mt-2 min-w-[220px] rounded-xl border border-cyan-500/30 bg-[#0d0518]/98 p-2 shadow-[0_0_32px_rgba(0,0,0,0.6)] backdrop-blur-md">
+        <div
+          className="absolute right-0 z-[100] mt-2 w-[min(100%,280px)] max-h-[min(70vh,420px)] overflow-y-auto rounded-xl border border-cyan-500/30 bg-[#0d0518]/98 p-2 shadow-[0_0_32px_rgba(0,0,0,0.6)] backdrop-blur-md sm:min-w-[220px] sm:w-auto"
+          role="listbox"
+          aria-label="Wallet connectors"
+        >
           <p className="mb-2 px-2 text-xs text-cyan-200/70">Choose wallet</p>
           <ul className="flex flex-col gap-1">
             {connectors.map((c) => (
