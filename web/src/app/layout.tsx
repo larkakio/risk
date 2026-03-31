@@ -28,7 +28,6 @@ export const metadata: Metadata = {
     icon: "/app-icon.jpg",
     apple: "/app-icon.jpg",
   },
-  other: baseAppId ? { "base:app_id": baseAppId } : {},
 };
 
 export default async function RootLayout({
@@ -45,6 +44,11 @@ export default async function RootLayout({
       lang="en"
       className={`${space.variable} ${jetbrains.variable} h-full font-sans antialiased`}
     >
+      <head>
+        {baseAppId ? (
+          <meta name="base:app_id" content={baseAppId} />
+        ) : null}
+      </head>
       <body className="min-h-full bg-[#06020e] font-sans text-zinc-100">
         <Providers initialState={initialState}>{children}</Providers>
       </body>
