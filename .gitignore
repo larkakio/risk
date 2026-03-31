@@ -1,0 +1,12 @@
+.DS_Store
+
+# Web
+web/node_modules/
+web/.next/
+web/out/
+web/.env.local
+web/.vercel
+
+# Contracts — build & local deploy secrets
+contracts/out/
+contracts/cache/
