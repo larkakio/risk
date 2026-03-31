@@ -3,11 +3,13 @@
 import {
   useAccount,
   useChainId,
+  useSwitchChain,
   useWriteContract,
   useWaitForTransactionReceipt,
 } from "wagmi";
 import { checkInAbi } from "@/lib/check-in-abi";
 import { getCheckInDataSuffix } from "@/lib/attribution";
+import { TARGET_CHAIN_ID } from "@/lib/wagmi-config";
 
 const addr = process.env.NEXT_PUBLIC_CHECK_IN_CONTRACT_ADDRESS as
   | `0x${string}`
@@ -16,6 +18,7 @@ const addr = process.env.NEXT_PUBLIC_CHECK_IN_CONTRACT_ADDRESS as
 export function CheckInPanel() {
   const { isConnected } = useAccount();
   const chainId = useChainId();
+  const { switchChainAsync, isPending: isSwitching } = useSwitchChain();
   const { writeContract, data: hash, error, isPending, reset } = useWriteContract();
   const { isLoading: confirming, isSuccess } = useWaitForTransactionReceipt({
     hash,
@@ -23,15 +26,22 @@ export function CheckInPanel() {
 
   const validAddr = addr && addr !== "0x0000000000000000000000000000000000000000";
 
-  function onCheckIn() {
+  async function onCheckIn() {
     if (!validAddr) return;
     reset();
+    if (chainId !== TARGET_CHAIN_ID) {
+      try {
+        await switchChainAsync({ chainId: TARGET_CHAIN_ID });
+      } catch {
+        return;
+      }
+    }
     const dataSuffix = getCheckInDataSuffix();
     writeContract({
       address: addr,
       abi: checkInAbi,
       functionName: "checkIn",
-      chainId,
+      chainId: TARGET_CHAIN_ID,
       dataSuffix,
     });
   }
@@ -52,7 +62,7 @@ export function CheckInPanel() {
         <>
           <button
             type="button"
-            disabled={isPending || confirming}
+            disabled={isPending || confirming || isSwitching}
             onClick={onCheckIn}
             className="rounded-lg border border-emerald-400/40 bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-200 hover:bg-emerald-500/25 disabled:opacity-50"
           >

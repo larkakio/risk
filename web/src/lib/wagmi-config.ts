@@ -12,6 +12,9 @@ function getTargetChain(): Chain {
 
 const targetChain = getTargetChain();
 
+/** Configured app chain (Base mainnet or Base Sepolia). Use for switch + writes. */
+export const TARGET_CHAIN_ID = targetChain.id;
+
 const connectors = [
   injected(),
   baseAccount({ appName: "Neon Risk" }),

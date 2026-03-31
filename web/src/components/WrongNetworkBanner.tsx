@@ -1,16 +1,14 @@
 "use client";
 
 import { useAccount, useChainId, useSwitchChain } from "wagmi";
-import { wagmiConfig } from "@/lib/wagmi-config";
-
-const targetId = wagmiConfig.chains[0].id;
+import { TARGET_CHAIN_ID } from "@/lib/wagmi-config";
 
 export function WrongNetworkBanner() {
   const { isConnected } = useAccount();
   const chainId = useChainId();
   const { switchChain, isPending } = useSwitchChain();
 
-  if (!isConnected || chainId === targetId) return null;
+  if (!isConnected || chainId === TARGET_CHAIN_ID) return null;
 
   return (
     <div
@@ -21,7 +19,7 @@ export function WrongNetworkBanner() {
       <button
         type="button"
         disabled={isPending}
-        onClick={() => switchChain({ chainId: targetId })}
+        onClick={() => switchChain({ chainId: TARGET_CHAIN_ID })}
         className="ml-2 rounded border border-cyan-400/70 px-3 py-1 text-cyan-300 underline-offset-2 hover:underline disabled:opacity-50"
       >
         {isPending ? "Switching…" : "Switch to Base"}

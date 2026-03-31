@@ -1,3 +1,4 @@
+import { AutoSwitchChain } from "@/components/AutoSwitchChain";
 import { ConnectWallet } from "@/components/ConnectWallet";
 import { WrongNetworkBanner } from "@/components/WrongNetworkBanner";
 import { CheckInPanel } from "@/components/CheckInPanel";
@@ -6,6 +7,7 @@ import { GameBoard } from "@/components/game/GameBoard";
 export default function Home() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-4 pb-10 pt-6">
+      <AutoSwitchChain />
       <header className="flex flex-col gap-4 border-b border-cyan-500/20 pb-6">
         <div className="flex flex-wrap items-start justify-between gap-4 overflow-visible">
           <div className="min-w-0 flex-1">
